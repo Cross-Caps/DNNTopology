@@ -2,6 +2,7 @@
 
 # Get the betti number min and max
 import models
+import Topology_functions
 def red_(val):
   for i in range(len(val)):
     if val[i].size==0:
