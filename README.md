@@ -18,8 +18,8 @@ On Characterizing the Evolution of Embedding Space of Neural Networks using Alge
 2. Install CubicalRipser: git clone https://github.com/shizuo-kaji/CubicalRipser_3dim
 3. Install persim 
 
-The directory DNNTopology/experiments contain Jupyter notebook with experiments from the paper
-### Usage Example
+The directory DNNTopology/experiments contains Jupyter notebook with experiments from the paper.
+
 
 
 
