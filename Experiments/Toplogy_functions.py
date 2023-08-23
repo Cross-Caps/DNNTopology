@@ -11,6 +11,8 @@ def get_persist(grayscale,max_dim=1):
     pds = [pd[pd[:,0] == i] for i in range(3)]
     persistence_diag = [p[:,1:3] for p in pds]
     return(persistence_diag)
+
+# betti number values as per the book computational topology by Tamal Dey and Yusu wang
 def betti(persistence_diag,threshold_val):
     betti_val=[]
     for i in persistence_diag:
@@ -20,6 +22,9 @@ def betti(persistence_diag,threshold_val):
                 temp = temp+1
         betti_val.append(temp)
     return(betti_val)
+
+    
+# Reshaping data 
 def set_data_shape(data,value=32):
     #shape_data = data.shape
     #print(shape_data)
