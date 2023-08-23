@@ -43,4 +43,60 @@ def matrix_betti(model,image,layer_=[1,2,3,4,5],thres=-5):
     bettis_.append(list(map(lambda x:betti(i,thres)[x],list(range(3)))))
   return(np.asarray(bettis_))
 
+    #Threshold
+
+def thresholdall_betti(model,image,data_name,layer_=[1,2,3,4,5],nth_betti=0,
+                       ra_labx=0,ra_laby=10,bet_thres=0.125,ra_min=5,ra_max=5,save_to_path=None):
+  result_1=list(map(lambda x:feat_lay_net(model,image,x),layer_[:3]))
+  result_1=result_1+feat_lay_net(model,image,4)
+  layer_=list(range(1,len(result_1)+1))
+  ra_min_max=red_(result_1[0])
+  for j in result_1[1:]:
+    k=red_(j)
+    ra_min_max=[min(ra_min_max[0],k[0]),max(ra_min_max[1],k[1])]
+  ra_min_max=[int(ra_min_max[0])+ra_min,int(ra_min_max[1])+ra_max]
+  betti0=[]
+  #print("betti")
+  ind=1
+  for i in result_1:
+    if len(i)==2 and nth_betti==2:
+      print(ind," : warning")
+      ind=ind+1
+      continue
+    betti0.append(list(map(lambda x:betti(i,x)[nth_betti],np.arange(ra_min_max[0],ra_min_max[1],bet_thres))))
+    ind=ind+1
+  print(len(betti0))
+  k=ra_labx+1
+  ra_laby=min(ra_laby,len(betti0))
+  plt.figure(figsize=(5,5))
+  a=0;
+  k0=[0,0]
+  for i in betti0[ra_labx:ra_laby]:
+    lay_=np.arange(ra_min_max[0],ra_min_max[1],bet_thres)
+    #lay_=lay_/np.linalg.norm(lay_)
+    plt.plot(lay_,
+             np.asarray(i),label=str(k)+"-Blocks")
+    a=max(a,np.amax(np.asarray(i)))
+    k0[0]=min(k0[0],np.amin(np.asarray(lay_)))
+    k0[1]=max(k0[1],np.amax(np.asarray(lay_)))
+    plt.legend(loc="best",fontsize=10)
+    k=k+1
+  x_tick_val=[round(p,2) for p in np.arange(k0[0],k0[1],step=(k0[1]-k0[0])/4)]
+  print(x_tick_val,k0,round((k0[1]-k0[0])/4))
+  plt.xlabel("$\eta$",fontsize=16)
+  plt.ylabel(r"$\beta$"+str(nth_betti),fontsize=16)
+  k=k+1
+  plt.xticks(x_tick_val+[round(k0[1],2)],fontsize=16)
+  a=int(a)+1000
+  y_ax=list(range(0,a,100))
+  plt.yticks(xticks_(y_ax,4),yticks_(y_ax,4),fontsize=16)
+  #   plt.legend(loc="best",fontsize=10)
+  #   k=k+1
+  # plt.xlabel("$\eta$",fontsize=20)
+  # plt.ylabel(r"$\beta$"+str(nth_betti),fontsize=20)
+  # plt.title(data_name,fontsize=16)
+  if save_to_path !=None:
+    plt.savefig(save_to_path, format='eps', bbox_inches='tight')
+  plt.show()
+
 '''
