@@ -1,6 +1,7 @@
 '''
 
 # Get the betti number min and max
+import models
 def red_(val):
   for i in range(len(val)):
     if val[i].size==0:
