@@ -1,3 +1,4 @@
+'''
 import torch
 import torch.nn as nn
 import torchvision
@@ -109,3 +110,4 @@ def index_(data_set,cl_):
       self.index_data=list(map(lambda ele_:index_(self.dataset,ele_),range((len(self.dataset.classes)))))
     else:
       print("Warning no indices ")
+'''
