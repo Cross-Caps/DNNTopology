@@ -1,3 +1,4 @@
+'''
 # Get the betti number min and max
 import models
 import Topology_functions
@@ -98,3 +99,4 @@ def thresholdall_betti(model,image,data_name,layer_=[1,2,3,4,5],nth_betti=0,
     plt.savefig(save_to_path, format='eps', bbox_inches='tight')
   plt.show()
 
+'''
