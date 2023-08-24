@@ -1,3 +1,4 @@
+'''
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import Ridge
@@ -48,4 +49,4 @@ class TTP():
       ax.tick_params(labelsize=16)
       if save_to_path !=None:
         plt.savefig(save_to_path, format='eps', bbox_inches='tight')
-
+'''
