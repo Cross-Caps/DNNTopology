@@ -1,7 +1,10 @@
-'''
 # Get the betti number min and max
 import models
-import Topology_functions
+import Topology_functions as tf
+import torch.nn as nn
+import numpy as np
+from torch.utils.data import Dataset, DataLoader
+# Get the betti number min and max
 def red_(val):
   for i in range(len(val)):
     if val[i].size==0:
@@ -10,7 +13,6 @@ def red_(val):
   return([np.min(x.flatten()),np.max(x.flatten())])
 
 #Get layer by layer feature
-
 def feat_lay_net(model,image,layer_t):
   if layer_t == 4:
       out = []
@@ -23,7 +25,7 @@ def feat_lay_net(model,image,layer_t):
             out_nump = output.detach().numpy().reshape(n[1],n[2],n[3])
             out_nump = out_nump.T
             #print(n,end=",")
-            out.append(get_persist(out_nump,max_dim=2))
+            out.append(tf.get_persist(out_nump,max_dim=2))
       return(out)
   n=image.shape
   out=nn.Sequential(*list(model.children())[:layer_t])(image)
@@ -31,7 +33,7 @@ def feat_lay_net(model,image,layer_t):
   out_nump=out_nump.T
   n=out_nump.shape
   out_nump=out_nump.reshape(n[0],n[1],n[2])
-  return(get_persist(out_nump,max_dim=2))
+  return(tf.get_persist(out_nump,max_dim=2))
 
 #Get the betti numbers
     
@@ -39,11 +41,20 @@ def matrix_betti(model,image,layer_=[1,2,3,4,5],thres=-5):
   result_1=list(map(lambda x:feat_lay_net(model,image,x),layer_[:3]))
   result_1=result_1+feat_lay_net(model,image,4)
   bettis_=[]
-  for i in result_1:
-    bettis_.append(list(map(lambda x:betti(i,thres)[x],list(range(3)))))
+  if type(thres)!=int and type(thres)!=float:
+    #print("entered into listed section")
+    for i_cap in thres:
+      betti0_=[]
+      for i in result_1:
+        betti0_.append(list(map(lambda x:tf.betti(i,i_cap)[x],list(range(3)))))
+      bettis_.append(betti0_)
+    #print("Note the matrix here contains different threshold values ",np.asarray(bettis_).shape)
+  else:
+    for i in result_1:
+      bettis_.append(list(map(lambda x:tf.betti(i,thres)[x],list(range(3)))))
   return(np.asarray(bettis_))
 
-    #Threshold
+#Threshold
 
 def thresholdall_betti(model,image,data_name,layer_=[1,2,3,4,5],nth_betti=0,
                        ra_labx=0,ra_laby=10,bet_thres=0.125,ra_min=5,ra_max=5,save_to_path=None):
@@ -63,7 +74,7 @@ def thresholdall_betti(model,image,data_name,layer_=[1,2,3,4,5],nth_betti=0,
       print(ind," : warning")
       ind=ind+1
       continue
-    betti0.append(list(map(lambda x:betti(i,x)[nth_betti],np.arange(ra_min_max[0],ra_min_max[1],bet_thres))))
+    betti0.append(list(map(lambda x:tf.betti(i,x)[nth_betti],np.arange(ra_min_max[0],ra_min_max[1],bet_thres))))
     ind=ind+1
   print(len(betti0))
   k=ra_labx+1
@@ -99,4 +110,17 @@ def thresholdall_betti(model,image,data_name,layer_=[1,2,3,4,5],nth_betti=0,
     plt.savefig(save_to_path, format='eps', bbox_inches='tight')
   plt.show()
 
-'''
+  
+class betti_matrix_get():
+    def __init__(self,thres):
+        self.Betti_matrix=[]
+        self.thres=thres
+        self.loader=None
+    def get_betti(self,model,layer_=False):
+        if layer_==False:
+            mat_bet=list(map(lambda x:matrix_betti(model,x[0],thres=self.thres),self.loader))
+        else:
+            mat_bet=list(map(lambda x:matrix_betti(model,x[0],layer_,thres=self.thres),self.loader))
+        self.Betti_matrix.append(mat_bet)
+    def get_loader(self,sub_dat):
+        self.loader=DataLoader(sub_dat, batch_size=1,shuffle=False,num_workers=2, pin_memory=True)
