@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from torch.utils.data import Subset
+# For getting subsets of the dataset
 def index_(data_set,cl_):
   idx=[]
   for i in range(len(data_set)):
@@ -35,6 +36,7 @@ def index_(data_set,cl_):
     plt.axis(ax)
   plt.show()
 
+# For getting the model and dataset
   class set_up():
   def __init__(self,pre_trained=True):
     self.model=None
