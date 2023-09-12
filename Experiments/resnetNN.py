@@ -54,7 +54,7 @@ def matrix_betti(model,image,layer_=[1,2,3,4,5],thres=-5):
       bettis_.append(list(map(lambda x:tf.betti(i,thres)[x],list(range(3)))))
   return(np.asarray(bettis_))
 
-#Threshold
+#Getting the betti curve 
 
 def thresholdall_betti(model,image,data_name,layer_=[1,2,3,4,5],nth_betti=0,
                        ra_labx=0,ra_laby=10,bet_thres=0.125,ra_min=5,ra_max=5,save_to_path=None):
