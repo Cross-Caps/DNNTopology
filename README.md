@@ -8,7 +8,16 @@
 </p>
 </h1>
 
-Code to accompanying Pattern Recognition Letters Submission:
+Code to accompany IEEE JSTPS paper:
+<h3 align="center">
+Topological Persistence of the Embedding Space of the Archetypal Subspace
+</h2>
+
+The directory DNNTopology/JSTPS/experiments contains all the code needed to replicate the result in the paper. 
+
+***
+
+Code to accompany Pattern Recognition Letters paper:
 <h3 align="center">
 On Characterizing the Evolution of Embedding Space of Neural Networks using Algebraic Topology
 </h2>
@@ -18,8 +27,8 @@ On Characterizing the Evolution of Embedding Space of Neural Networks using Alge
 2. Install CubicalRipser: git clone https://github.com/shizuo-kaji/CubicalRipser_3dim
 3. Install persim ripser
 
-The directory DNNTopology/experiments will be updated with a Jupyter notebook with experiments from the paper.
-Currently, the repository is not a full package but all the code needed to replicate the result in the paper is in the repository. 
+The directory DNNTopology/PRL/experiments will be updated with a Jupyter notebook with experiments from the paper.
+Currently, the repository is not a full package but hosts all the code needed to replicate the result in the paper. 
 
 
 
