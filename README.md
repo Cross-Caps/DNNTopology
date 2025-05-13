@@ -18,6 +18,8 @@ The directory DNNTopology/JSTPS/experiments contains all the code needed to repl
 1. Requires numpy,...
 2. Install persim ripser
 3. Install spams package (archetypes)
+
+ Currently, the repository is not a full package but hosts all the code needed to replicate the result in the paper. 
 ***
 
 Code to accompany Pattern Recognition Letters paper:
