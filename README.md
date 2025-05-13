@@ -14,7 +14,10 @@ Topological Persistence of the Embedding Space of the Archetypal Subspace
 </h2>
 
 The directory DNNTopology/JSTPS/experiments contains all the code needed to replicate the result in the paper. 
-
+### Installation
+1. Requires numpy,...
+2. Install persim ripser
+3. Install spams package (archetypes)
 ***
 
 Code to accompany Pattern Recognition Letters paper:
