@@ -7,6 +7,20 @@
 <img alt="PyPI" src="https://img.shields.io/badge/release-v1.0-brightgreen?logo=apache&logoColor=brightgreen">
 </p>
 </h1>
+Code to accompany KDD paper:
+<h3 align="center">
+Evaluating Generative Models via Cubical Homology based Persistent Entropy
+</h2>
+
+The directory DNNTopology/KDD/experiments contains all the code needed to replicate the result in the paper. 
+### Installation
+1. Requires numpy,...
+2. Install gudhi 
+3. Install giotto 
+
+ Currently, the repository is not a full package but hosts all the code needed to replicate the result in the paper. 
+***
+
 
 Code to accompany IEEE JSTPS paper:
 <h3 align="center">
